@@ -3,9 +3,10 @@
 <head><div th:replace="fragments/header :: header-css"/></head>
 <body>
 <div th:replace="fragments/header :: header"> </div>
-<h1>Welcome!</h1>
+<h1 th:text="#{greeting}"></h1>
 
-<p><a th:href="@{/hello}">Login</a> or <a th:href="@{/register}">register</a></p>
+<a th:href="@{/hello}" th:text="#{login}"></a>
+<a th:href="@{/register}" th:text="#{register}"></a>
 <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>
