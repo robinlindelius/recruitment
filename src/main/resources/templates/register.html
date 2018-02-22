@@ -5,10 +5,17 @@
     <title>Spring Security Example </title>
 </head>
 <body>
-<form th:action="@{/register}" method="post" th:object="${user}">
+
+<form th:action="@{/register}"  method="post" th:object="${user}">
+
+    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</div>
     <div><input id="username" type="text" name="username" th:placeholder="#{username}" th:field="*{username}"/></div>
+
+    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
     <div><input id="password" type="password" name="password" th:placeholder="#{password}" th:field="*{password}"/></div>
+  
     <div><input type="submit" th:value="#{sign_up}"/></div>
 </form>
+
 </body>
 </html>

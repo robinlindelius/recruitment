@@ -1,5 +1,7 @@
 package se.kth.iv1201.recruitment.entity;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -8,14 +10,23 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "users", catalog = "Recruitment")
 public class User {
 
+    @NotNull
+    @Size(min=2, max=20)
     private String username;
+
+    @NotNull
+    @Size(min=2, max=60)
     private String password;
+
     private boolean enabled;
+
     private Set<UserRole> userRole = new HashSet<>(0);
 
     public User() {
