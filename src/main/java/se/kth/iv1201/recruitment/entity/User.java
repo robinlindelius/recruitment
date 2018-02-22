@@ -13,6 +13,10 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+
+/**
+ * Creates the O/R Mapping for User
+ */
 @Entity
 @Table(name = "users", catalog = "Recruitment")
 public class User {

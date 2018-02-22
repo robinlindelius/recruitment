@@ -10,10 +10,16 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import java.util.Locale;
-
+/**
+ * Uses classes instead of view-controllers.
+ */
 @Configuration
 public class MvcConfig extends WebMvcConfigurerAdapter {
 
+    /**
+     * Adds View-Controllers. You don't have to create a class for each.
+     * @param registry the registry used.
+     */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/home").setViewName("home");
