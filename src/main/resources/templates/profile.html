@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head><div th:replace="fragments/header :: header-css"> </div></head>
+<body>
+<div th:replace="fragments/header :: header"> </div>
+<h3 th:inline="text">You are logged in as [[${#httpServletRequest.remoteUser}]].</h3>
+<form id="" method="post">
+    <div><input id="firstName" th:placeholder="#{enter_firstname}" minlength="2" type="text"/></div><br/>
+    <div><input id="lastName" th:placeholder="#{enter_lastname}" minlength="2" type="text"/></div><br/>
+    <div><input id="personalNumber" th:placeholder="#{enter_personalnumber}" minlength="2" type="text"/></div><br/>
+    <div><input id="email" th:placeholder="#{enter_email}" minlength="2" type="text"/></div><br/>
+    <div><input type="submit" value="Update Profile"/></div>
+</form>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
