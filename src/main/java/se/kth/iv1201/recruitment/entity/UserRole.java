@@ -13,6 +13,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+/**
+ * Creates the O/R Mapping for UserRole
+ */
 @Entity
 @Table(name = "user_roles", catalog = "Recruitment",
         uniqueConstraints = @UniqueConstraint(
