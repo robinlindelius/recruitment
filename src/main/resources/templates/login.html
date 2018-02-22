@@ -1,23 +1,22 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-    <title>Spring Security Example </title>
-</head>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head><div th:replace="fragments/header :: header-css"> </div></head>
 <body>
+<div th:replace="fragments/header :: header"> </div>
 <div th:if="${param.error}">
-    Invalid username and/or password.
+    <p th:text="#{invalid_credentials}"></p>
 </div>
 <div th:if="${param.logout}">
-    You have been logged out.
+    <p th:text="#{logout_message}"></p>
 </div>
 <div th:if="${param.reg}">
     Registration successful.
 </div>
 <form th:action="@{/login}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
+    <div><input type="text" name="username" th:placeholder="#{username}"/></div>
+    <div><input type="password" name="password" th:placeholder="#{password}"/></div>
+    <div><input type="submit" th:value="#{sign_in}"/></div>
 </form>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>
