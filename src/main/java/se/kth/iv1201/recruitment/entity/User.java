@@ -27,7 +27,6 @@ public class User {
 
     private boolean enabled;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<UserRole> userRole = new HashSet<>(0);
 
     public User() {
@@ -77,6 +76,7 @@ public class User {
         this.enabled = enabled;
     }
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     public Set<UserRole> getUserRole() {
         return this.userRole;
     }
