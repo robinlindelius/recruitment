@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head><div th:replace="fragments/header :: header-css"> </div></head>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      th:replace="fragments/layout :: page(~{::body})">
+
 <body>
-<div th:replace="fragments/header :: header"> </div>
+<div class="container-fluid">
+    <div class="row text-center">
+        <br/>
 <div th:if="${param.error}">
     <p th:text="#{invalid_credentials}"></p>
 </div>
@@ -17,6 +20,6 @@
     <div><input type="password" name="password" th:placeholder="#{password}"/></div>
     <div><input type="submit" th:value="#{sign_in}"/></div>
 </form>
-<div th:replace="fragments/footer :: footer"></div>
+    </div></div>
 </body>
 </html>
