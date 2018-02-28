@@ -21,10 +21,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/recruiter/**")
-                .access("hasRole('ROLE_RECRUITER')")
-                .antMatchers("/register").permitAll()
                 .antMatchers("/").permitAll()
+                .antMatchers("/register").permitAll()
+                .antMatchers("/recruiter/**").hasAuthority("RECRUITER")
+                .antMatchers("/applicant/**").hasAuthority("APPLICANT")
                 .anyRequest()
                 .authenticated()
                 .and()
