@@ -1,9 +1,11 @@
 package se.kth.iv1201.recruitment.entity;
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -17,22 +19,26 @@ public class Person {
     @Id
     @NotNull
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "user_role_id", unique = true, nullable = false)
+    @Column(name = "person_id", unique = true, nullable = false)
     int personId;
 
     @NotNull
+    @Size(min=4, max=20)
     @Column(name = "firstname")
     private String firstName;
 
     @NotNull
+    @Size(min=4, max=20)
     @Column(name = "lastname")
     private String lastName;
 
     @NotNull
+    @Size(min=12, max=12)
     @Column(name = "personalnumber")
     private String personalNumber;
 
     @NotNull
+    @NotEmpty
     @Email
     @Column(name = "email")
     private String email;

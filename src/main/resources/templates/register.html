@@ -5,20 +5,27 @@
 <div class="container-fluid">
     <div class="row text-center">
         <br/>
-<form th:action="@{/register}"  method="post" th:object="${user}">
+<form th:action="@{/register}" method="post">
 
-    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</div>
-    <div><input id="username" type="text" name="username" th:placeholder="#{username}" th:field="*{username}"/></div><br/>
+    <div class="text-danger small" th:if="${#fields.hasErrors('user.username')}" th:errors="${user.username}">Name Error</div>
+    <div><input id="username" type="text" name="username" th:placeholder="#{username}" th:field="${user.username}"/></div><br/>
 
-    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
-    <div><input id="password" type="password" name="password" th:placeholder="#{password}" th:field="*{password}"/></div><br/>
+    <div class="text-danger small" th:if="${#fields.hasErrors('user.password')}" th:errors="${user.password}">Password Error</div>
+    <div><input id="password" type="password" name="password" th:placeholder="#{password}" th:field="${user.password}"/></div><br/>
 
-    <div><input id="firstName" th:placeholder="#{enter_firstname}" minlength="2" type="text" /></div><br/>
-    <div><input id="lastName" th:placeholder="#{enter_lastname}" minlength="2" type="text"/></div><br/>
-    <div><input id="personalNumber" th:placeholder="#{enter_personalnumber}" minlength="2" type="text"/></div><br/>
-    <div><input id="email" th:placeholder="#{enter_email}" minlength="2" type="text"/></div><br/>
+    <div class="text-danger small" th:if="${#fields.hasErrors('person.firstName')}" th:errors="${person.firstName}">Firstname Error</div>
+    <div><input id="firstName" type="text" name="firstName" th:placeholder="#{enter_firstname}" th:field="${person.firstName}" minlength="2"/></div><br/>
 
-    <div><input type="submit" th:value="#{sign_up}"/></div>
+    <div class="text-danger small" th:if="${#fields.hasErrors('person.lastName')}" th:errors="${person.lastName}">Lastname Error</div>
+    <div><input id="lastName" type="text" name="lastName" th:placeholder="#{enter_lastname}" th:field="${person.lastName}" minlength="2"/></div><br/>
+
+    <div class="text-danger small" th:if="${#fields.hasErrors('person.personalNumber')}" th:errors="${person.personalNumber}">Personal Number Error</div>
+    <div><input id="personalNumber" type="text" name="personalNumber" th:placeholder="#{enter_personalnumber}" th:field="${person.personalNumber}" minlength="2"/></div><br/>
+
+    <div class="text-danger small" th:if="${#fields.hasErrors('person.email')}" th:errors="${person.email}">Email Error</div>
+    <div><input id="email" type="text" name="email" th:placeholder="#{enter_email}" th:field="${person.email}" minlength="2"/></div><br/>
+
+    <div><input type="submit" th:value="#{sign_up}" onclick="on()"/></div>
 </form>
     </div></div>
 </body>

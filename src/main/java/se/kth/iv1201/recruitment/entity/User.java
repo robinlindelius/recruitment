@@ -34,7 +34,7 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<UserRole> roles = new HashSet<>();
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(cascade = {CascadeType.ALL})
     private Person person;
 
     public User() {
@@ -80,5 +80,13 @@ public class User {
 
     public void addRole(UserRole role) {
         roles.add(role);
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 }
