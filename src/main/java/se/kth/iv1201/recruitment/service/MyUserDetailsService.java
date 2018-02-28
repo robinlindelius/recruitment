@@ -16,6 +16,9 @@ import se.kth.iv1201.recruitment.entity.User;
 import se.kth.iv1201.recruitment.entity.UserRole;
 import se.kth.iv1201.recruitment.repository.UserRepository;
 
+/**
+ * Service using Spring Security
+ */
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 
@@ -23,6 +26,10 @@ public class MyUserDetailsService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Loads a user by username.
+     * @param username the username who wants to load.
+     */
     @Transactional(readOnly=true)
     @Override
     public UserDetails loadUserByUsername(final String username)

@@ -5,7 +5,8 @@ import javax.persistence.*;
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
- * Entity class for a work related competence
+ * Entity class for a work related competence.
+ * Creates the O/R Mapping for Competence.
  */
 @Entity
 @Table(name = "competence", catalog = "Recruitment")

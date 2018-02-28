@@ -5,7 +5,8 @@ import javax.persistence.*;
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
- * Entity class for a competence profile that maps a competence to years of experience
+ * Entity class for a competence profile that maps a competence to years of experience.
+ * Creates the O/R Mapping for CompetenceProfile.
  */
 @Entity
 @Table(name = "competence_profile", catalog = "Recruitment")

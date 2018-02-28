@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head th:replace="fragments/header :: header-css"></head>
+      th:replace="fragments/layout :: page(~{::body})">
 <body>
-
+<div class="container-fluid">
+    <div class="row text-center">
+        <br/>
 <form th:action="@{/register}"  method="post" th:object="${user}">
 
     <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</div>
-    <div><input id="username" type="text" name="username" th:placeholder="#{username}" th:field="*{username}"/></div>
+    <div><input id="username" type="text" name="username" th:placeholder="#{username}" th:field="*{username}"/></div><br/>
 
     <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
-    <div><input id="password" type="password" name="password" th:placeholder="#{password}" th:field="*{password}"/></div>
-  
+    <div><input id="password" type="password" name="password" th:placeholder="#{password}" th:field="*{password}"/></div><br/>
+
+    <div><input id="firstName" th:placeholder="#{enter_firstname}" minlength="2" type="text" /></div><br/>
+    <div><input id="lastName" th:placeholder="#{enter_lastname}" minlength="2" type="text"/></div><br/>
+    <div><input id="personalNumber" th:placeholder="#{enter_personalnumber}" minlength="2" type="text"/></div><br/>
+    <div><input id="email" th:placeholder="#{enter_email}" minlength="2" type="text"/></div><br/>
+
     <div><input type="submit" th:value="#{sign_up}"/></div>
 </form>
-
-<div th:replace="fragments/footer :: footer"></div>
+    </div></div>
 </body>
 </html>
