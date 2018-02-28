@@ -30,6 +30,10 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         registry.addViewController("/profile").setViewName("profile");
     }
 
+    /**
+     * A locale resolver that determines the current locale
+     * @return locale resolver for the session
+     */
     @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
@@ -37,6 +41,11 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         return sessionLocaleResolver;
     }
 
+    /**
+     * An interceptor bean that will switch to a new locale based on the value
+     * of the lang parameter appended to a request
+     * @return the locale change interceptor
+     */
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
@@ -44,6 +53,10 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         return localeChangeInterceptor;
     }
 
+    /**
+     * Adds the locale change interceptor to the application's interceptor registry
+     * @param registry The application's interceptor registry
+     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
