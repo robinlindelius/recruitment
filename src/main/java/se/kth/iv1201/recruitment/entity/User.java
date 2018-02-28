@@ -4,12 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -21,17 +16,26 @@ import javax.validation.constraints.Size;
 @Table(name = "users", catalog = "Recruitment")
 public class User {
 
+    @Id
     @NotNull
-    @Size(min=2, max=20)
+    @Size(min=4, max=20)
+    @Column(name = "username", unique = true, nullable = false, length = 45)
     private String username;
 
     @NotNull
-    @Size(min=2, max=60)
+    @Size(min=4, max=20)
+    @Column(name = "password", nullable = false, length = 60)
     private String password;
 
+    @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
-    private Set<UserRole> userRole = new HashSet<>(0);
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<UserRole> roles = new HashSet<>();
+
+    @OneToOne(fetch = FetchType.EAGER)
+    private Person person;
 
     public User() {
     }
@@ -42,17 +46,6 @@ public class User {
         this.enabled = enabled;
     }
 
-    public User(String username, String password,
-                boolean enabled, Set<UserRole> userRole) {
-        this.username = username;
-        this.password = password;
-        this.enabled = enabled;
-        this.userRole = userRole;
-    }
-
-    @Id
-    @Column(name = "username", unique = true,
-            nullable = false, length = 45)
     public String getUsername() {
         return this.username;
     }
@@ -61,8 +54,6 @@ public class User {
         this.username = username;
     }
 
-    @Column(name = "password",
-            nullable = false, length = 60)
     public String getPassword() {
         return this.password;
     }
@@ -71,7 +62,6 @@ public class User {
         this.password = password;
     }
 
-    @Column(name = "enabled", nullable = false)
     public boolean isEnabled() {
         return this.enabled;
     }
@@ -80,13 +70,15 @@ public class User {
         this.enabled = enabled;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    public Set<UserRole> getUserRole() {
-        return this.userRole;
+    public Set<UserRole> getRoles() {
+        return roles;
     }
 
-    public void setUserRole(Set<UserRole> userRole) {
-        this.userRole = userRole;
+    public void setRoles(Set<UserRole> roles) {
+        this.roles = roles;
     }
 
+    public void addRole(UserRole role) {
+        roles.add(role);
+    }
 }

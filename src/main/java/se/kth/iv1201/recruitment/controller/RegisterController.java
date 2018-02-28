@@ -29,13 +29,12 @@ public class RegisterController {
     public String postRegister(@Valid User user, BindingResult result) {
 
         user.setEnabled(true);
+        user.addRole(UserRole.APPLICANT);
 
         if(result.hasErrors()) {
             return "register";
         }
 
-        user.getUserRole().add(new UserRole(user, "USER"));
-        user.getUserRole().forEach((role) -> System.out.println(role.getRole()));
         userRepository.save(user);
         return "redirect:/login?reg=success";
     }
