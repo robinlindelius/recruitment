@@ -17,12 +17,11 @@ import se.kth.iv1201.recruitment.entity.UserRole;
 import se.kth.iv1201.recruitment.repository.UserRepository;
 
 /**
- * Service using Spring Security
+ * Service using Spring Security for handling users.
  */
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 
-    //get user from the database, via Hibernate
     @Autowired
     private UserRepository userRepository;
 
@@ -32,18 +31,16 @@ public class MyUserDetailsService implements UserDetailsService {
      */
     @Transactional(readOnly=true)
     @Override
-    public UserDetails loadUserByUsername(final String username)
-            throws UsernameNotFoundException {
-
+    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
         User user = userRepository.findOne(username);
+        if(user == null) {
+            throw new UsernameNotFoundException("User does not exist");
+        }
         List<GrantedAuthority> authorities = buildUserAuthority(user.getRoles());
 
         return buildUserForAuthentication(user, authorities);
-
     }
 
-    // Converts se.kth.iv1201.recruitment.entity.User user to
-    // org.springframework.security.core.userdetails.User
     private org.springframework.security.core.userdetails.User buildUserForAuthentication(User user,
                                                                                           List<GrantedAuthority> authorities) {
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
@@ -62,5 +59,4 @@ public class MyUserDetailsService implements UserDetailsService {
 
         return Result;
     }
-
 }

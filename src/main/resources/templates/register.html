@@ -7,6 +7,7 @@
         <br/>
 <form th:action="@{/register}" method="post">
 
+    <div class="text-danger small" th:if="${#ctx.containsVariable('exception')}" th:text="#{user_already_exists}">Duplicate Name Error</div>
     <div class="text-danger small" th:if="${#fields.hasErrors('user.username')}" th:errors="${user.username}">Name Error</div>
     <div><input id="username" type="text" name="username" th:placeholder="#{username}" th:field="${user.username}"/></div><br/>
 
