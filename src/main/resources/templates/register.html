@@ -26,7 +26,7 @@
     <div class="text-danger small" th:if="${#fields.hasErrors('person.email')}" th:errors="${person.email}">Email Error</div>
     <div><input id="email" type="text" name="email" th:placeholder="#{enter_email}" th:field="${person.email}" minlength="2"/></div><br/>
 
-    <div><input type="submit" th:value="#{sign_up}" onclick="on()"/></div>
+    <div><input type="submit" th:value="#{sign_up}"/></div>
 </form>
     </div></div>
 </body>
