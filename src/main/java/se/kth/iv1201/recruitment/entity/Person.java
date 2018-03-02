@@ -43,15 +43,11 @@ public class Person {
     @Column(name = "email")
     private String email;
 
+    /**
+     * Empty constructor, needed by the persistence library.
+     */
     public Person() {
 
-    }
-
-    public Person(String firstName, String lastName, String personalNumber, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.personalNumber = personalNumber;
-        this.email = email;
     }
 
     public long getPersonId() {
