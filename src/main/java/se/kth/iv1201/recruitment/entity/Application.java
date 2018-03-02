@@ -46,7 +46,6 @@ public class Application {
      * @param availabilities        The availabilities related to the application
      */
     public Application(Date date, Person person, Set<CompetenceProfile> competenceProfiles, Set<Availability> availabilities) {
-        this.accepted = accepted;
         this.date = date;
         this.person = person;
         this.competenceProfiles = competenceProfiles;
