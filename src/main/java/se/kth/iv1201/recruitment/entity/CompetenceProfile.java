@@ -11,8 +11,16 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @Table(name = "competence_profile", catalog = "Recruitment")
 public class CompetenceProfile {
+
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "competence_profile_id", unique = true, nullable = false)
     private Integer competenceProfileId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     private Competence competence;
+
+    @Column(name = "years_of_experience", nullable = false)
     private int yearsOfExperience;
 
     /**
@@ -23,18 +31,15 @@ public class CompetenceProfile {
 
     /**
      * Constructor for a competence profile, maps a competence to years of experience
-     * @param competence the competence
-     * @param yearsOfExperience years of experience for the competence
+     * @param competence            The competence
+     * @param yearsOfExperience     Years of experience for the competence
      */
     public CompetenceProfile(Competence competence, int yearsOfExperience) {
         this.competence = competence;
         this.yearsOfExperience = yearsOfExperience;
     }
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "competence_profile_id",
-            unique = true, nullable = false)
+
     public Integer getCompetenceProfileId() {
         return competenceProfileId;
     }
@@ -43,7 +48,6 @@ public class CompetenceProfile {
         this.competenceProfileId = competenceProfileId;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
     public Competence getCompetence() {
         return competence;
     }
@@ -52,7 +56,6 @@ public class CompetenceProfile {
         this.competence = competence;
     }
 
-    @Column(name = "years_of_experience", nullable = false)
     public int getYearsOfExperience() {
         return yearsOfExperience;
     }

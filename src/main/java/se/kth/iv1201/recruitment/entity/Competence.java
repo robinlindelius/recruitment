@@ -11,7 +11,13 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @Table(name = "competence", catalog = "Recruitment")
 public class Competence {
+
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "competence_id", unique = true, nullable = false)
     private Integer competenceId;
+
+    @Column(name = "name", nullable = false, length = 45)
     private String name;
 
     /**
@@ -28,10 +34,7 @@ public class Competence {
         this.name = name;
     }
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "competence_id",
-            unique = true, nullable = false)
+
     public Integer getCompetenceId() {
         return competenceId;
     }
@@ -41,7 +44,6 @@ public class Competence {
         this.competenceId = competenceId;
     }
 
-    @Column(name = "name", nullable = false, length = 45)
     public String getName() {
         return name;
     }

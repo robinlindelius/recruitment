@@ -20,7 +20,7 @@ public class Person {
     @NotNull
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "person_id", unique = true, nullable = false)
-    int personId;
+    private long personId;
 
     @NotNull
     @Size(min=4, max=20)
@@ -54,7 +54,7 @@ public class Person {
         this.email = email;
     }
 
-    public int getPersonId() {
+    public long getPersonId() {
         return personId;
     }
 
