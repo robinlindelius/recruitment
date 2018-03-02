@@ -37,13 +37,10 @@ public class User {
     @OneToOne(cascade = {CascadeType.ALL})
     private Person person;
 
+    /**
+     * Empty constructor, needed by the persistence library.
+     */
     public User() {
-    }
-
-    public User(String username, String password, boolean enabled) {
-        this.username = username;
-        this.password = password;
-        this.enabled = enabled;
     }
 
     public String getUsername() {

@@ -12,8 +12,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import se.kth.iv1201.recruitment.entity.Person;
 import se.kth.iv1201.recruitment.entity.User;
 import se.kth.iv1201.recruitment.entity.UserRole;
+import se.kth.iv1201.recruitment.exception.UsernameAlreadyExistsException;
 import se.kth.iv1201.recruitment.repository.UserRepository;
 
 /**
@@ -39,6 +41,23 @@ public class MyUserDetailsService implements UserDetailsService {
         List<GrantedAuthority> authorities = buildUserAuthority(user.getRoles());
 
         return buildUserForAuthentication(user, authorities);
+    }
+
+    /**
+     * Method to register a new User.
+     * @param user The User to save.
+     * @throws UsernameAlreadyExistsException is thrown if a user with the same username already exists.
+     */
+    @Transactional(rollbackFor = UsernameAlreadyExistsException.class)
+    public void registerUser(User user) throws UsernameAlreadyExistsException {
+        if(userRepository.findOne(user.getUsername())!= null) {
+            throw new UsernameAlreadyExistsException("The username '" + user.getUsername() + "' already exists.");
+        }
+
+        user.setEnabled(true);
+        user.addRole(UserRole.APPLICANT);
+
+        userRepository.save(user);
     }
 
     private org.springframework.security.core.userdetails.User buildUserForAuthentication(User user,

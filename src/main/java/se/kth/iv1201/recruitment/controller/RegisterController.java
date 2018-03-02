@@ -6,50 +6,66 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.servlet.ModelAndView;
 import se.kth.iv1201.recruitment.entity.Person;
 import se.kth.iv1201.recruitment.entity.User;
-import se.kth.iv1201.recruitment.entity.UserRole;
 import se.kth.iv1201.recruitment.exception.UsernameAlreadyExistsException;
-import se.kth.iv1201.recruitment.repository.UserRepository;
+import se.kth.iv1201.recruitment.service.MyUserDetailsService;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+/**
+ * A controller that handles mappings from the registration form into objects to store in the DB.
+ */
 @Controller
 public class RegisterController {
-    @Autowired
-    private UserRepository userRepository;
 
+    @Autowired
+    private MyUserDetailsService userDetailsService;
+
+    /**
+     * Method that runs when the /register page receives a http GET request, to add objects necessary for registration
+     * to the model.
+     * @param model the model to populate with objects.
+     * @return String with a view name.
+     */
     @GetMapping("/register")
     public String getRegister(Model model) {
-        User user = new User();
-        Person person = new Person();
 
-        model.addAttribute("user", user);
-        model.addAttribute("person", person);
+        model.addAttribute("user", new User());
+        model.addAttribute("person", new Person());
         return "register";
     }
 
+    /**
+     * Method that runs when the /register page receives a http POST request from the form located on that page,
+     * tries to bind the values from the form into objects that are then stored in the DB.
+     * @param user the User to store.
+     * @param bindingResultUser the result of the attempt to bind the form user to an object.
+     * @param person the Person to store.
+     * @param bindingResultPerson the result of the attempt to bind the form person to an object.
+     * @param model object that carries objects between views.
+     * @return String with a view name.
+     * @throws UsernameAlreadyExistsException if a duplicate username is found.
+     */
     @PostMapping(path="/register")
     public String postRegister(@Valid User user, BindingResult bindingResultUser,
-                               @Valid Person person, BindingResult bindingResultPerson) throws UsernameAlreadyExistsException {
+                               @Valid Person person, BindingResult bindingResultPerson, Model model) throws UsernameAlreadyExistsException {
 
         if(bindingResultUser.hasErrors() || bindingResultPerson.hasErrors()) {
             return "register";
         }
 
-        if(userRepository.findOne(user.getUsername()) != null) {
-            throw new UsernameAlreadyExistsException("Username already exists");
+        try {
+            user.setPerson(person);
+            userDetailsService.registerUser(user);
+        } catch (UsernameAlreadyExistsException exception) {
+            //log exception
+            model.addAttribute("exception", exception);
+            return "register";
         }
-        user.setEnabled(true);
-        user.addRole(UserRole.APPLICANT);
-        user.setPerson(person);
-
-        userRepository.save(user);
         return "home";
     }
-
+/*
     @ExceptionHandler(UsernameAlreadyExistsException.class)
     public ModelAndView conflict(HttpServletRequest request, UsernameAlreadyExistsException exception) {
         ModelAndView mav = new ModelAndView();
@@ -60,5 +76,5 @@ public class RegisterController {
         mav.addObject("person", new Person());
         mav.setViewName("register");
         return mav;
-    }
+    }*/
 }
