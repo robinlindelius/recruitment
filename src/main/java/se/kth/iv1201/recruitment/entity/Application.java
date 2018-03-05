@@ -23,13 +23,15 @@ public class Application {
     @Column (nullable = false)
     private Date date;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Person person;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "application", cascade = CascadeType.ALL)
+    //@ElementCollection(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<CompetenceProfile> competenceProfiles = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "application", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    //@ElementCollection(fetch = FetchType.EAGER)
     private Set<Availability> availabilities = new HashSet<>();
 
     /**
@@ -98,5 +100,13 @@ public class Application {
 
     public void setAvailabilities(Set<Availability> availabilities) {
         this.availabilities = availabilities;
+    }
+
+    public void addAvailability(Availability availability) {
+        availabilities.add(availability);
+    }
+
+    public void addCompetenceProfile(CompetenceProfile competenceProfile) {
+        competenceProfiles.add(competenceProfile);
     }
 }

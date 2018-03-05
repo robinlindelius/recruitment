@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      th:replace="fragments/layout :: page(~{::body})">
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h1 th:text="#{user_greeting}"></h1>
+            <h1 th:inline="Text">[[${#httpServletRequest.remoteUser}]]!</h1>
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" th:value="#{logout}">
+            </form>
+            <h3 th:text="#{applications}"></h3>
+            <div th:if="${#ctx.containsVariable('applications')}" th:each="appl : ${applications}">
+                <p th:text="${appl.date.toString()}"></p>
+                <span th:text="${appl.person.firstName}"></span>
+                <span th:text="${appl.person.lastName}"></span>
+                <span th:text="${appl.person.email}"></span>
+                <p th:each="av : ${appl.availabilities}">
+                    <span th:text="${av.from}"></span>
+                    <span th:text="${av.to}"></span>
+                </p>
+                <p th:each="co : ${appl.competenceProfiles}">
+                    <span th:text="${co.competence.name}"></span>
+                    <span th:text="${co.yearsOfExperience}"></span>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
