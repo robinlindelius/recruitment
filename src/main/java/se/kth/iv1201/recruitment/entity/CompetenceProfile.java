@@ -39,7 +39,6 @@ public class CompetenceProfile {
         this.yearsOfExperience = yearsOfExperience;
     }
 
-
     public Integer getCompetenceProfileId() {
         return competenceProfileId;
     }

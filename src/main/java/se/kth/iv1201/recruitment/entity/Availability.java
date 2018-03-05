@@ -12,13 +12,13 @@ public class Availability {
 
     @Id
     @GeneratedValue
-    @Column (name = "availability_id")
+    @Column(name = "availability_id")
     private long id;
 
-    @Column (name = "from_date")
+    @Column(name = "from_date")
     private Date from;
 
-    @Column (name = "to_date")
+    @Column(name = "to_date")
     private Date to;
 
     /**

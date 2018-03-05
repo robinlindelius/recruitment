@@ -7,6 +7,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -58,6 +59,19 @@ public class MyUserDetailsService implements UserDetailsService {
         user.addRole(UserRole.APPLICANT);
 
         userRepository.save(user);
+    }
+
+    /**
+     * Retrieves the person connected to the user that is currently logged in.
+     * @return person object of user.
+     * @throws Exception if no user can be found.
+     */
+    public Person getLoggedInPerson() throws Exception {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(principal instanceof org.springframework.security.core.userdetails.User) {
+            return userRepository.findOne(((org.springframework.security.core.userdetails.User) principal).getUsername()).getPerson();
+        }
+        throw new Exception("NO LOGGED IN");
     }
 
     private org.springframework.security.core.userdetails.User buildUserForAuthentication(User user,

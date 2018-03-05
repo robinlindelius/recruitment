@@ -39,7 +39,6 @@ public class Competence {
         return competenceId;
     }
 
-
     public void setCompetenceId(Integer competenceId) {
         this.competenceId = competenceId;
     }

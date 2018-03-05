@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      th:replace="fragments/layout :: page(~{::body})">
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h1 th:text="#{user_greeting}"></h1>
+            <h1 th:inline="Text">[[${#httpServletRequest.remoteUser}]]!</h1>
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" th:value="#{logout}">
+            </form>
+            <h3 th:text="#{earlier_applications}"></h3>
+            <div th:if="${#ctx.containsVariable('applications')}" th:each="appl : ${applications}">
+                <p th:text="${appl.date.toString()}"></p>
+                <p th:each="c : ${appl.competenceProfiles}" th:text="${c.competence.name}"></p>
+
+            </div>
+
+            <h3 th:text="#{new_application}"></h3>
+            <form id="apply" th:action="@{/applicant/application}" method="post">
+                <div>
+                    <span th:text="#{choose}"></span>
+                <select id="competence" class="float-sm-right" name="competence" th:field="${competenceProfile.competence}" form="apply">
+                    <option value="" disabled selected hidden th:text="#{choose}"></option>
+                    <option th:each="competence : ${competences}" th:value="${competence.competenceId}" th:text="${competence.name}"></option>
+                </select>
+                    <span th:text="#{experience}"></span>
+                <input id="yearsOfExperience" type="number" name="yearsOfExperience" th:field="${competenceProfile.yearsOfExperience}" th:placeholder="#{experience}">
+                </div>
+                    <!--<input type="submit" name="submit">
+            </form>
+            <form>-->
+
+                <span th:text="#{from_date}"></span>
+                <input id="from" type="date" name="from" th:field="${availability.from}" th:placeholder="#{from_date}">
+                <span th:text="#{to_date}"></span>
+                <input if="to" type="date" name="to" th:field="${availability.to}" th:placeholder="#{to_date}">
+                <input type="submit" name="submit">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

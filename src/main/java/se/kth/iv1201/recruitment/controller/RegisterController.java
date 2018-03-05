@@ -14,7 +14,7 @@ import se.kth.iv1201.recruitment.service.MyUserDetailsService;
 import javax.validation.Valid;
 
 /**
- * A controller that handles mappings from the registration form into objects to store in the DB.
+ * A controller that handles traffic between the register form, and the user service used to store and retrieve from db.
  */
 @Controller
 public class RegisterController {
