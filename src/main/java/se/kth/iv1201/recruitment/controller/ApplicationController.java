@@ -13,12 +13,15 @@ import se.kth.iv1201.recruitment.service.ApplicationService;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * A controller that handles traffic between the application form and application list, and the application service used to store and retrieve from db.
  */
 @Controller
 public class ApplicationController {
+
+    private final Logger logger = Logger.getLogger(getClass().getName());
 
     @Autowired
     private CompetenceRepository competenceRepository;
