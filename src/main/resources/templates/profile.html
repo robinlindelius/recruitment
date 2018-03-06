@@ -6,7 +6,7 @@
     <div class="row text-center">
 <h3 th:inline="text">[[${#httpServletRequest.remoteUser}]]'s profil.</h3>
         <form th:action="@{/logout}" method="post">
-            <input type="submit" value="Sign Out"/>
+            <input type="submit" th:value="#{sign_out}"/>
         </form>
     </div></div>
 </body>
