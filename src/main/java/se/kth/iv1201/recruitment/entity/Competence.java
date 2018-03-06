@@ -20,6 +20,9 @@ public class Competence {
     @Column(name = "name", nullable = false, length = 45)
     private String name;
 
+    @Column(name = "lang", nullable = false, length = 45)
+    private String lang;
+
     /**
      * Empty constructor for a competence - used by the persistence library
      */
@@ -49,5 +52,13 @@ public class Competence {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getLang() {
+        return lang;
+    }
+
+    public void setLang(String lang) {
+        this.lang = lang;
     }
 }

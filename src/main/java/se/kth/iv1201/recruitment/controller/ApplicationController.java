@@ -10,15 +10,18 @@ import se.kth.iv1201.recruitment.entity.*;
 import se.kth.iv1201.recruitment.repository.CompetenceRepository;
 import se.kth.iv1201.recruitment.service.ApplicationService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A controller that handles traffic between the application form and application list, and the application service used to store and retrieve from db.
  */
 @Controller
 public class ApplicationController {
+    private final String DEFAULT_LANG = "en";
 
     @Autowired
     private CompetenceRepository competenceRepository;
@@ -33,11 +36,15 @@ public class ApplicationController {
      * @return String with a view name.
      */
     @GetMapping("/applicant/application")
-    public String getApplication(Model model) {
+    public String getApplication(Model model, HttpServletRequest request) {
+        Locale locale = request.getLocale();
 
         List<Competence> competences = new ArrayList<>();
-        competenceRepository.findAll().forEach(competences::add);
+        competenceRepository.findByLang(locale.getLanguage()).forEach(competences::add);
 
+        if (competences.isEmpty()) {
+            competenceRepository.findByLang(DEFAULT_LANG).forEach(competences::add);
+        }
         //List<CompetenceProfile> competenceProfiles = new ArrayList<>();
         //model.addAttribute("competenceProfiles", competenceProfiles);
 
