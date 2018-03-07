@@ -2,12 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head :: head"></head>
 <body>
-
 <div th:fragment="menu">
     <h3 th:text="#{menu}"></h3>
     <a th:href="@{/profile}" th:text="#{login}"></a><br/>
     <a th:href="@{/register}" th:text="#{register}"></a><br/>
 </div>
-
 </body>
 </html>
