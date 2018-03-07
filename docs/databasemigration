@@ -1,0 +1,9 @@
+Users with already  fully valid information will be registered in the new database automatically.
+If there is someone who doesn’t have its login credentials, username/password, but do have an email-address. 
+A new generated username/password will be sent via email.
+If there is a user that does not have an email-address and no login credentials. But does have a personal number. 
+A letter will be sent to them with new login credentials, if the physical address can be found,
+and if the company wants to send out letters in the first place.
+If the user has a username and a password. Upon login he/she will be asked to fill in eventual missing information. 
+If this user has an email-address, an email will be sent to remind them to login and fill in the missing information.
+If only first and surname exists, and no other information. There is nothing we can do.
