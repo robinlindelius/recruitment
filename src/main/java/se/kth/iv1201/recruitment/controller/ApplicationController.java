@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.Locale;
 
 /**
@@ -22,6 +23,8 @@ import java.util.Locale;
 @Controller
 public class ApplicationController {
     private final Locale DEFAULT_LOCALE = Locale.ENGLISH;
+
+    private final Logger logger = Logger.getLogger(getClass().getName());
 
     @Autowired
     private CompetenceRepository competenceRepository;
