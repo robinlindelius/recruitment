@@ -11,14 +11,20 @@
 <div th:if="${param.logout}">
     <p th:text="#{logout_message}"></p>
 </div>
-<div th:if="${param.reg}">
-    <p th:text="#{reg_success}"></p>
-</div>
+
 <form th:action="@{/login}" method="post">
     <div><input type="text" name="username" th:placeholder="#{username}"/></div>
     <div><input type="password" name="password" th:placeholder="#{password}"/></div>
     <div><input type="submit" th:value="#{sign_in}"/></div>
 </form>
     </div></div>
+<div id="overlay" th:if="${param.new}" onclick="off()">
+    <div id="overlay-text" th:text="#{reg_success}"></div>
+</div>
+<script>
+    function off() {
+        document.getElementById("overlay").style.display = "none";
+    }
+</script>
 </body>
 </html>

@@ -1,7 +1,5 @@
 package se.kth.iv1201.recruitment.entity;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;

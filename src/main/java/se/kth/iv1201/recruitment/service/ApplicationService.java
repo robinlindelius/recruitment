@@ -2,10 +2,14 @@ package se.kth.iv1201.recruitment.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import se.kth.iv1201.recruitment.entity.*;
+import se.kth.iv1201.recruitment.exception.UsernameAlreadyExistsException;
 import se.kth.iv1201.recruitment.repository.ApplicationRepository;
 import se.kth.iv1201.recruitment.repository.CompetenceRepository;
 
+import javax.validation.Valid;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,28 +36,22 @@ public class ApplicationService {
      * @param competenceProfile DTO to construct from
      * @param availability DTO to construct from
      */
-    public void registerApplication(CompetenceProfileDTO competenceProfile, AvailabilityDTO availability) {
+    @Transactional(rollbackFor = ParseException.class)
+    public void registerApplication(@Valid @ModelAttribute("competenceProfile") CompetenceProfileDTO competenceProfile,
+                                    @Valid @ModelAttribute("availability") AvailabilityDTO availability) throws Exception, ParseException {
         Application application = new Application();
 
-        try {
-            Person person = myUserDetailsService.getLoggedInPerson();
-            application.setPerson(person);
-        } catch(Exception e) {
-            System.out.println(e.getMessage());
-        }
+        Person person = myUserDetailsService.getLoggedInPerson();
+        application.setPerson(person);
 
         CompetenceProfile cp = new CompetenceProfile();
         cp.setYearsOfExperience(competenceProfile.getYearsOfExperience());
         cp.setCompetence(competenceRepository.findOne(competenceProfile.getCompetence()));
 
-        try {
-            Date from = new SimpleDateFormat("yyyy-MM-dd").parse(availability.getFrom());
-            Date to = new SimpleDateFormat("yyyy-MM-dd").parse(availability.getTo());
-            Availability av = new Availability(from, to);
-            application.addAvailability(av);
-        } catch (ParseException ex) {
-            System.out.println(ex.getMessage());
-        }
+        Date from = new SimpleDateFormat("yyyy-MM-dd").parse(availability.getFrom());
+        Date to = new SimpleDateFormat("yyyy-MM-dd").parse(availability.getTo());
+        Availability av = new Availability(from, to);
+        application.addAvailability(av);
         application.setAccepted(false);
         application.setDate(new Date());
         application.addCompetenceProfile(cp);
@@ -80,6 +78,10 @@ public class ApplicationService {
         return applications;
     }
 
+    /**
+     * Retrieves all applications from the database.
+     * @return list of all applications.
+     */
     public List<Application> getApplications() {
         List<Application> applications = new ArrayList<>();
         applicationRepository.findAll().forEach(applications::add);
