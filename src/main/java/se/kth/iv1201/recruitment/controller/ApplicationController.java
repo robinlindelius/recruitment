@@ -35,6 +35,7 @@ public class ApplicationController {
      * Method that runs when the /applicant/application page receives a http GET request, to add objects necessary for
      * making applications to the model.
      * @param model the model to populate with objects.
+     * @param request to get the locale from to internationalize db.
      * @return String with a view name.
      */
     @GetMapping("/applicant/application")

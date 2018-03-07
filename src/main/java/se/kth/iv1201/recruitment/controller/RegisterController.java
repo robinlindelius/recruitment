@@ -50,7 +50,7 @@ public class RegisterController {
      */
     @PostMapping(path="/register")
     public String postRegister(@Valid User user, BindingResult bindingResultUser,
-                               @Valid Person person, BindingResult bindingResultPerson, Model model) throws UsernameAlreadyExistsException {
+                               @Valid Person person, BindingResult bindingResultPerson, Model model) {
 
         if(bindingResultUser.hasErrors() || bindingResultPerson.hasErrors()) {
             return "register";
@@ -65,16 +65,4 @@ public class RegisterController {
         }
         return "redirect:/login?new=true";
     }
-/*
-    @ExceptionHandler(UsernameAlreadyExistsException.class)
-    public ModelAndView conflict(HttpServletRequest request, UsernameAlreadyExistsException exception) {
-        ModelAndView mav = new ModelAndView();
-
-        mav.addObject("url", request.getRequestURL());
-        mav.addObject("exception", exception);
-        mav.addObject("user", new User());
-        mav.addObject("person", new Person());
-        mav.setViewName("register");
-        return mav;
-    }*/
 }
