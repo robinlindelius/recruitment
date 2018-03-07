@@ -4,7 +4,7 @@
 <body>
 <div th:fragment="menu">
     <h3 th:text="#{menu}"></h3>
-    <a th:href="@{/profile}" th:text="#{login}"></a><br/>
+    <a sec:authorize="isAnonymous()" th:href="@{/login}" th:text="#{login}"></a><br/>
     <a th:href="@{/register}" th:text="#{register}"></a><br/>
     <a sec:authorize="isAuthenticated()" th:href="@{/applicant/application}", th:text="#{link_applicant}"></a><br/>
     <a sec:authorize="isAuthenticated()" th:href="@{/recruiter/applications}", th:text="#{link_recruiter}"></a><br/>
