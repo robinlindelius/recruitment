@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,6 +26,8 @@ import se.kth.iv1201.recruitment.repository.UserRepository;
  */
 @Service
 public class MyUserDetailsService implements UserDetailsService {
+
+    private final Logger logger = Logger.getLogger(getClass().getName());
 
     @Autowired
     private UserRepository userRepository;
@@ -59,6 +63,8 @@ public class MyUserDetailsService implements UserDetailsService {
         user.addRole(UserRole.APPLICANT);
 
         userRepository.save(user);
+
+        logger.info("USER CREATED: [USERNAME=" + user.getUsername() + "]");
     }
 
     /**
