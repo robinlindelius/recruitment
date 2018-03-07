@@ -21,7 +21,7 @@ import java.util.Locale;
  */
 @Controller
 public class ApplicationController {
-    private final String DEFAULT_LANG = "en";
+    private final Locale DEFAULT_LOCALE = Locale.ENGLISH;
 
     @Autowired
     private CompetenceRepository competenceRepository;
@@ -43,7 +43,7 @@ public class ApplicationController {
         competenceRepository.findByLang(locale.getLanguage()).forEach(competences::add);
 
         if (competences.isEmpty()) {
-            competenceRepository.findByLang(DEFAULT_LANG).forEach(competences::add);
+            competenceRepository.findByLang(DEFAULT_LOCALE.getLanguage()).forEach(competences::add);
         }
         //List<CompetenceProfile> competenceProfiles = new ArrayList<>();
         //model.addAttribute("competenceProfiles", competenceProfiles);
