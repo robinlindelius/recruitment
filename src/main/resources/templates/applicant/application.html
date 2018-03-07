@@ -20,26 +20,34 @@
             <h3 th:text="#{new_application}"></h3>
             <form id="apply" th:action="@{/applicant/application}" method="post">
                 <div>
+                    <div class="text-danger small" th:if="${#fields.hasErrors('competenceProfile.competence')}" th:errors="${competenceProfile.competence}">Experience Error</div>
                     <span th:text="#{choose}"></span>
                 <select id="competence" class="float-sm-right" name="competence" th:field="${competenceProfile.competence}" form="apply">
                     <option value="" disabled selected hidden th:text="#{choose}"></option>
                     <option th:each="competence : ${competences}" th:value="${competence.competenceId}" th:text="${competence.name}"></option>
                 </select>
                     <span th:text="#{experience}"></span>
-                <input id="yearsOfExperience" type="number" name="yearsOfExperience" th:field="${competenceProfile.yearsOfExperience}" th:placeholder="#{experience}">
+                <input id="yearsOfExperience" type="number" min="1" name="yearsOfExperience" th:field="${competenceProfile.yearsOfExperience}" th:placeholder="#{experience}">
                 </div>
-                    <!--<input type="submit" name="submit">
-            </form>
-            <form>-->
 
+                <div class="text-danger small" th:if="${#ctx.containsVariable('error')}" th:text="#{date_err}"></div>
+                <div class="text-danger small" th:if="${#fields.hasErrors('availability.from')}" th:errors="${availability.from}">Date Error</div>
                 <span th:text="#{from_date}"></span>
-                <input id="from" type="date" name="from" th:field="${availability.from}" th:placeholder="#{from_date}">
+                <input id="from" type="date" name="from" min="2018-01-01" th:field="${availability.from}" th:placeholder="#{from_date}">
                 <span th:text="#{to_date}"></span>
-                <input if="to" type="date" name="to" th:field="${availability.to}" th:placeholder="#{to_date}">
+                <input if="to" type="date" name="to" min="2018-01-01" th:field="${availability.to}" th:placeholder="#{to_date}">
                 <input type="submit" name="submit">
             </form>
         </div>
     </div>
 </div>
+<div id="overlay" th:if="${param.new}" onclick="off()">
+    <div id="overlay-text" th:text="#{app_success}"></div>
+</div>
+<script>
+    function off() {
+        document.getElementById("overlay").style.display = "none";
+    }
+</script>
 </body>
 </html>

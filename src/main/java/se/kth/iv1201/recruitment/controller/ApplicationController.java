@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import se.kth.iv1201.recruitment.entity.*;
 import se.kth.iv1201.recruitment.repository.CompetenceRepository;
@@ -34,17 +35,10 @@ public class ApplicationController {
      */
     @GetMapping("/applicant/application")
     public String getApplication(Model model) {
-
-        List<Competence> competences = new ArrayList<>();
-        competenceRepository.findAll().forEach(competences::add);
-
-        //List<CompetenceProfile> competenceProfiles = new ArrayList<>();
-        //model.addAttribute("competenceProfiles", competenceProfiles);
-
-        model.addAttribute("applications", applicationService.getApplicationsForUser());
-        model.addAttribute("competences", competences);
-        model.addAttribute("competenceProfile", new CompetenceProfileDTO());
-        model.addAttribute("availability", new AvailabilityDTO());
+        model.addAttribute("competences", addCompetences());
+        model.addAttribute("competenceProfile", addCompetenceProfile());
+        model.addAttribute("availability", addAvailability());
+        model.addAttribute("applications", addApplications());
         return "applicant/application";
     }
 
@@ -68,21 +62,50 @@ public class ApplicationController {
      * @param bindingResultCompetenceProfile result from binding the form fields into the object.
      * @param availability DTO to make a Availability object from.
      * @param bindingResultAvailability result from binding the form fields into the object.
-     * @return
+     * @return String with a view.
      */
     @PostMapping("/applicant/application")
     public String postApplication(@Valid CompetenceProfileDTO competenceProfile, BindingResult bindingResultCompetenceProfile,
-                                  @Valid AvailabilityDTO availability, BindingResult bindingResultAvailability) {
+                                  @Valid AvailabilityDTO availability, BindingResult bindingResultAvailability,
+                                  Model model) {
 
         if(bindingResultCompetenceProfile.hasErrors() || bindingResultAvailability.hasErrors()) {
-            System.out.println(bindingResultCompetenceProfile.toString());
-            System.out.println(bindingResultAvailability.toString());
 
+            model.addAttribute("error", new Exception("Invalid date."));
             return "applicant/application";
         }
 
-        applicationService.registerApplication(competenceProfile, availability);
+        try {
+            applicationService.registerApplication(competenceProfile, availability);
+        } catch (Exception ex) {
+            //log
+            System.out.println(ex.getMessage());
+        }
+        model.addAttribute("applications", addApplications());
 
-        return "redirect:/applicant/application";
+        return "redirect:/applicant/application?new=true";
+    }
+
+    @ModelAttribute("competenceProfile")
+    private CompetenceProfileDTO addCompetenceProfile() {
+        return new CompetenceProfileDTO();
+    }
+
+    @ModelAttribute("competences")
+    private List<Competence> addCompetences() {
+        List<Competence> competences = new ArrayList<>();
+        competenceRepository.findAll().forEach(competences::add);
+
+        return competences;
+    }
+
+    @ModelAttribute("availability")
+    private AvailabilityDTO addAvailability() {
+        return new AvailabilityDTO();
+    }
+
+    @ModelAttribute("applications")
+    private List<Application> addApplications() {
+        return applicationService.getApplicationsForUser();
     }
 }

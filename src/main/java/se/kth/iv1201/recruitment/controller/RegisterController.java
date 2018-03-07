@@ -63,7 +63,7 @@ public class RegisterController {
             model.addAttribute("exception", exception);
             return "register";
         }
-        return "home";
+        return "redirect:/login?new=true";
     }
 /*
     @ExceptionHandler(UsernameAlreadyExistsException.class)
