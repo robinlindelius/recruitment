@@ -20,8 +20,6 @@ import java.util.logging.Logger;
 @Controller
 public class RegisterController {
 
-    private final Logger logger = Logger.getLogger(getClass().getName());
-
     @Autowired
     private MyUserDetailsService userDetailsService;
 
@@ -62,7 +60,6 @@ public class RegisterController {
             user.setPerson(person);
             userDetailsService.registerUser(user);
         } catch (UsernameAlreadyExistsException exception) {
-            //log exception
             model.addAttribute("exception", exception);
             return "register";
         }

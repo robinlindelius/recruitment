@@ -25,8 +25,6 @@ import java.util.Locale;
 public class ApplicationController {
     private final Locale DEFAULT_LOCALE = Locale.ENGLISH;
 
-    private final Logger logger = Logger.getLogger(getClass().getName());
-
     @Autowired
     private CompetenceRepository competenceRepository;
 

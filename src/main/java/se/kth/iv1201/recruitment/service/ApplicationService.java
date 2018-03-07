@@ -15,12 +15,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Service class to handle storing and retreiving applications from the database.
  */
 @Service
 public class ApplicationService {
+
+    private final Logger logger = Logger.getLogger(getClass().getName());
 
     @Autowired
     ApplicationRepository applicationRepository;
@@ -57,6 +60,8 @@ public class ApplicationService {
         application.addCompetenceProfile(cp);
 
         applicationRepository.save(application);
+
+        logger.info("APPLICATION CREATED: [APPLICATION=" + application.getId() + "]");
     }
 
     /**
