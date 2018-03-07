@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       th:replace="fragments/layout :: page(~{::body})">
-
 <body>
 <div class="container-fluid">
     <div class="row text-center">
@@ -15,13 +14,11 @@
 <div th:if="${param.reg}">
     <p th:text="#{reg_success}"></p>
 </div>
-
 <form th:action="@{/login}" method="post">
     <div><input type="text" name="username" th:placeholder="#{username}"/></div>
     <div><input type="password" name="password" th:placeholder="#{password}"/></div>
     <div><input type="submit" th:value="#{sign_in}"/></div>
 </form>
     </div></div>
-
 </body>
 </html>
