@@ -12,12 +12,15 @@ import se.kth.iv1201.recruitment.exception.UsernameAlreadyExistsException;
 import se.kth.iv1201.recruitment.service.MyUserDetailsService;
 
 import javax.validation.Valid;
+import java.util.logging.Logger;
 
 /**
  * A controller that handles traffic between the register form, and the user service used to store and retrieve from db.
  */
 @Controller
 public class RegisterController {
+
+    private final Logger logger = Logger.getLogger(getClass().getName());
 
     @Autowired
     private MyUserDetailsService userDetailsService;

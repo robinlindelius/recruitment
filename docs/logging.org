@@ -1,0 +1,7 @@
+The application log will be saved to /var/log/Recruitment/recruitment.log.
+The file will act as a general log for the application and includes all output 
+from the server as well as relevant exceptions thrown for debugging purposes.
+In addition all major events in the application will be logged for security
+purposes. This includes when a new user is registered, when and who created
+an application and would also include when an application is removed,
+accepted or declined when implemented.
