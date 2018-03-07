@@ -38,8 +38,8 @@ public class ApplicationController {
      * @return String with a view name.
      */
     @GetMapping("/applicant/application")
-    public String getApplication(Model model) {
-        model.addAttribute("competences", addCompetences());
+    public String getApplication(Model model, HttpServletRequest request) {
+        model.addAttribute("competences", addCompetences(request));
         model.addAttribute("competenceProfile", addCompetenceProfile());
         model.addAttribute("availability", addAvailability());
         model.addAttribute("applications", addApplications());
@@ -97,7 +97,7 @@ public class ApplicationController {
     }
 
     @ModelAttribute("competences")
-    private List<Competence> addCompetences() {
+    private List<Competence> addCompetences(HttpServletRequest request) {
         Locale locale = request.getLocale();
 
         List<Competence> competences = new ArrayList<>();
